@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hello Marvin Acme!</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</head>
+
+<body>
+    <section class="section">
+        <div class="container">
+            <h1 class="title">
+                Hello Marvin Acme!
+            </h1>
+            <p class="subtitle">
+                Please choose an image file from you filesystem to upload!
+            </p>
+            <form action="/img/" method="post" enctype="multipart/form-data">
+                <div class="field">
+                    <div class="file has-name is-fullwidth is-primary">
+                        <label class="file-label">
+                            <input class="file-input" type="file" name="pic" id="file-input" accept="image/*">
+                            <span class="file-cta">
+                                <span class="file-icon">
+                                    <i class="fas fa-upload"></i>
+                                </span>
+                                <span class="file-label">
+                                    Choose a file
+                                </span>
+                            </span>
+                            <span class="file-name" id="file-name">
+                            </span>
+                        </label>
+                    </div>
+                    <p class="help is-danger is-primary" id="file-type-error" style="display: none;">Only <b>jp(e)g/png</b> files are supported! Try again.</p>
+                </div>
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button class="button is-link" id="submit-button" style="visibility: hidden;">Submit</button>
+                    </div>
+                    <div class="control">
+                        <button class="button is-text" type="button" id="cancel-button" style="visibility: hidden;">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+    <script>
+    const fileInput = document.getElementById("file-input"),
+        fileName = document.getElementById("file-name"),
+        submitButton = document.getElementById("submit-button"),
+        cancelButton = document.getElementById("cancel-button"),
+        fileTypeError = document.getElementById("file-type-error");
+    const extensionAcceptable = function(filename) {
+        return /\.(jpe?g|png)$/i.test(filename);
+    }
+    const resetControls = function() {
+        fileName.innerHTML = "";
+        submitButton.style.visibility = "hidden";
+        cancelButton.style.visibility = "hidden";
+        fileTypeError.style.display = "none";
+    }
+    fileInput.onchange = function() {
+        resetControls();
+        filename = fileInput.files[0].name;
+        if (!extensionAcceptable(filename)) {
+            fileTypeError.style.display = "inherit";
+            return;
+        }
+        fileName.innerHTML = filename;
+        submitButton.style.visibility = "inherit";
+        cancelButton.style.visibility = "inherit";
+    };
+    cancelButton.onclick = function() {
+        resetControls();
+    }
+    </script>
+</body>
+
+</html>
