@@ -1,5 +1,7 @@
 import io
 import json
+import re
+import mimetypes
 
 from flask import Flask, send_file
 from flask import Response, request
@@ -31,13 +33,16 @@ def img():
     img = request.files["img"]
     if not img.filename:
         return _json_response({"img": "Select a file"}, 400)
+    filename = secure_filename(img.filename)
+    if re.match(r"image/.+", mimetypes.guess_type(filename)[0]) is None:
+        return _json_response({"img": "Unsupported file extension"}, 400)
     return send_file(
         io.BytesIO(img.stream.read()),
-        attachment_filename=secure_filename(img.filename),
+        attachment_filename=filename,
         mimetype=img.mimetype,
     )
 
 
 @app.route("/status/", methods=["GET"])
-def echo():
+def status():
     return _json_response({"status": "UP"})
