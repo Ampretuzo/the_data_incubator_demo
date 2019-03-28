@@ -1,0 +1,1 @@
+[![CircleCI](https://circleci.com/gh/Ampretuzo/the_data_incubator_demo/tree/master.svg?style=svg)](https://circleci.com/gh/Ampretuzo/the_data_incubator_demo/tree/master)
