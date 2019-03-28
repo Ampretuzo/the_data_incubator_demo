@@ -32,12 +32,12 @@ jobs:
       - run:
           command: |
             . venv/bin/activate
-            pytest
-      # - store_artifacts:
-      #     path: test-reports/
-      #     destination: tr1
-      # - store_test_results:
-      #     path: test-reports/
+            pytest --junitxml=test-reports/junit.xml
+      - store_artifacts:
+          path: test-reports/
+          destination: tr1
+      - store_test_results:
+          path: test-reports/
   deploy:
     docker:
       - image: buildpack-deps:trusty
